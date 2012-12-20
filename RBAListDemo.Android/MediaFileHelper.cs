@@ -9,15 +9,24 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Xamarin.Media;
+using System.Threading.Tasks;
 using Android.Graphics.Drawables;
-using System.IO;
 using System.Globalization;
+using System.IO;
 using Android.Graphics;
 
-namespace RBAListDemo.Android
+namespace RBAList.Core
 {
-   public class NativeConverters
+    public class MediaFileHelper
     {
+        public Task<MediaFile> GetPhoto(bool takeNew, Context context)
+        {
+            var picker = new MediaPicker(context);
+
+            return takeNew ? picker.TakePhotoAsync(new StoreCameraMediaOptions()) : picker.PickPhotoAsync();
+        }
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

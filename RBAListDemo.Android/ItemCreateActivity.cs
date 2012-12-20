@@ -57,8 +57,8 @@ namespace RBAListDemo.Android
 
         private void AddPhoto(bool takeNew)
         {
-            var mediaFileSource = new MediaFileHelper(this);
-            mediaFileSource.GetPhoto(takeNew).ContinueWith(t =>
+            var mediaFileSource = new MediaFileHelper();
+            mediaFileSource.GetPhoto(takeNew, this).ContinueWith(t =>
             {
                 var ex = t.Exception;
 
