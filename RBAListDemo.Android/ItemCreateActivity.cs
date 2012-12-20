@@ -15,6 +15,7 @@ using RBAList.Core.Models;
 using RBAList.Core;
 using Android.Graphics;
 using Android.OS;
+using Xamarin.Media;
 
 namespace RBAListDemo.Android
 {
@@ -30,6 +31,7 @@ namespace RBAListDemo.Android
         private ImageView _imgProduct;
         private ProgressBar _progress;
 
+        private Stream _mediaFile;
         
         protected override void OnCreate(Bundle bundle)
         {
@@ -63,13 +65,17 @@ namespace RBAListDemo.Android
                 var ex = t.Exception;
 
                 if (t.Status != TaskStatus.RanToCompletion || t.Result == null) return;
-                Bitmap b = BitmapFactory.DecodeFile(t.Result.Path);
-                
-                _imgProduct.Visibility = ViewStates.Visible;
-                _progress.Visibility = ViewStates.Gone;
-                _imgProduct.SetImageBitmap(scaleDown(b, 1500, true));
-                
-                   t.Result.Dispose();
+
+                using (var mediaFile = t.Result)
+                {
+                    _mediaFile = mediaFile.GetStream() ;
+                    Bitmap b = BitmapFactory.DecodeFile(t.Result.Path);
+
+                    _imgProduct.Visibility = ViewStates.Visible;
+                    _progress.Visibility = ViewStates.Gone;
+                    _imgProduct.SetImageBitmap(scaleDown(b, 1500, true));
+                }
+                       
                 
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -88,16 +94,29 @@ namespace RBAListDemo.Android
 
         public void _btnAdd_Click(object sender, EventArgs e)
         {
+            ItemViewModel itemViewModel = new ItemViewModel();
+
             Item item = new Item();
-            item.AskingPrice = double.Parse(_txtPrice.Text);
             item.Name = _txtName.Text;
+            
             item.RetailPrice = double.Parse(_txtRetail.Text);
+            item.AskingPrice = double.Parse(_txtPrice.Text);
+
             item.Description = _txtDescription.Text;
             item.CreatedDate = DateTime.Now;
+
+            itemViewModel.Item = item;
+            itemViewModel.AddPhoto(_mediaFile);
+
             
 
-            RBAListRepository.AddItem(item);
+            RBAListRepository.AddItemAsync(itemViewModel, SaveComplete);
 
+          
+        }
+
+        public void SaveComplete()
+        {
             StartActivity(typeof(ItemListActivity));
         }
     }

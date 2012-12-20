@@ -49,6 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ItemViewModel.cs" />
+    <Compile Include="Models\ItemImage.cs" />
     <Compile Include="RBAListRepository.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

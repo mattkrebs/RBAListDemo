@@ -1,4 +1,6 @@
 ﻿using Android.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
 using Microsoft.WindowsAzure.MobileServices;
@@ -6,70 +8,22 @@ using RBAList.Core;
 using RBAList.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RBAListDemo.Android
 {
-    public class ItemListAdapter : ArrayAdapter<Item>
+    
+    public class ItemAdapter : BaseAdapter<Item>
     {
-        private List<Item> items = new List<Item>();
-
-        private readonly LayoutInflater inflater;
-      //  private readonly IMobileServiceTable<Item> table;
-     //   private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-        private bool isUpdating;
-
-        public ItemListAdapter(Context context, int textViewResourceId, List<Item> items) : base(context, textViewResourceId, items)
-        {
-            this.items = items;
-           
-        }
-        public override long GetItemId(int position)
-        {
-            return position;
-        }
- 
-        public override View GetView(int position, View view, ViewGroup parent)
-        {
-            Item item = this.items[position];
-            if (view == null)
-            {
-                var layoutInflater = (LayoutInflater)Context.GetSystemService(Context.LayoutInflaterService);
-                view = layoutInflater.Inflate(Resource.Layout.ItemListItemView, null);
-            }
-
-            ImageView image = view.FindViewById<ImageView>(Resource.Id.imgItem);
-            TextView name = view.FindViewById<TextView>(Resource.Id.txtName);
-            TextView description = view.FindViewById<TextView>(Resource.Id.txtDescription);
-            TextView amount = view.FindViewById<TextView>(Resource.Id.txtPrice);
-
-            name.Text = item.Name;
-            description.Text = item.Description;
-            amount.Text = string.Format("${0:0.00}", item.AskingPrice);
-
-            return view;
-        }
-       
-        public override int Count
-        {
-            get 
-            {
-                int count = this.items.Count();
-                return count;
-            }
-        }
-    }
-    public class ItemAdapter
-        : BaseAdapter<Item>
-    {
-        public ItemAdapter(IMobileServiceTable<Item> table, Context context)
+        public ItemAdapter(Context context)
         {
             this.inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);
-            this.table = table;
-
-            RefreshAsync();
+           
+            RBAListRepository.GetItemsAsync(RefreshAsync);
+            
         }
 
         public event EventHandler IsUpdatingChanged;
@@ -99,17 +53,17 @@ namespace RBAListDemo.Android
 
         public override Item this[int position]
         {
-            get { return this.items[position]; }
+            get { return this.items[position].Item; }
         }
 
         public override long GetItemId(int position)
         {
-            return this.items[position].Id;
+            return this.items[position].Item.Id;
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            Item item = this.items[position];
+            ItemViewModel product = this.items[position];
 
             View view = this.inflater.Inflate(Resource.Layout.ItemListItemView, null);
 
@@ -119,48 +73,31 @@ namespace RBAListDemo.Android
             TextView description = view.FindViewById<TextView>(Resource.Id.txtDescription);
             TextView amount = view.FindViewById<TextView>(Resource.Id.txtPrice);
 
-            name.Text = item.Name;
-            description.Text = item.Description;
-            amount.Text = string.Format("${0:0.00}", item.AskingPrice);
+            name.Text = product.Item.Name;
+            description.Text = product.Item.Description;
+            amount.Text = string.Format("${0:0.00}", product.Item.AskingPrice);
+
+            if (product.ItemImage != null)
+                image.SetImageDrawable((BitmapDrawable)MediaFileHelper.Convert(product.ItemImage.ImageBase64, typeof(BitmapDrawable), null, CultureInfo.CurrentCulture));
+
 
             return view;
         }
 
-        public void RefreshAsync()
+        public void RefreshAsync(List<ItemViewModel> returnedItems)
         {
             IsUpdating = true;
-            
-            this.table.Where(ti => !ti.Sold).ToListAsync()
-                .ContinueWith(t =>
-                {
-                    this.items = t.Result;
-                    NotifyDataSetChanged();
-                    IsUpdating = false;
-                }, scheduler);
+
+            this.items = returnedItems;
+            NotifyDataSetChanged();
+          
         }
-        
-        //public void Insert(Item item)
-        //{
-        //    IsUpdating = true;
-        //    this.items.Add(item);
-        //    NotifyDataSetChanged();
 
-        //    this.table.InsertAsync(item).ContinueWith(t =>
-        //    {
-        //        if (t.IsFaulted)
-        //        {
-        //            this.items.Remove(item);
-        //            NotifyDataSetChanged();
-        //        }
 
-        //        IsUpdating = false;
-        //    }, scheduler);
-        //}
 
-        private List<Item> items = new List<Item>();
+        private List<ItemViewModel> items = new List<ItemViewModel>();
 
         private readonly LayoutInflater inflater;
-        private readonly IMobileServiceTable<Item> table;
         private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private bool isUpdating;
     }

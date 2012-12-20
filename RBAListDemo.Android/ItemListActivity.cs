@@ -43,7 +43,7 @@ namespace RBAListDemo.Android
         {
             base.OnResume();
 
-            _listView.Adapter = new ItemAdapter(RBAListRepository.MobileService.GetTable<Item>(), this); ;
+            _listView.Adapter = new ItemAdapter(this); ;
         }
 
       

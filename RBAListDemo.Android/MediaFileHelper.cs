@@ -28,7 +28,7 @@ namespace RBAList.Core
         }
 
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public static object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var bitmapDrawable = (BitmapDrawable)value;
             using (var ms = new MemoryStream())
@@ -39,7 +39,7 @@ namespace RBAList.Core
             }
         }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public static object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var base64 = (string)value;
 

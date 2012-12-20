@@ -19,8 +19,7 @@ namespace RBAList.Core.Models
         {
             Name = string.Empty;
             Description = string.Empty;
-            UserId = string.Empty;
-            ImageGuid = string.Empty;
+            UserId = string.Empty;            
 
         }
         public int Id { get; set; }
@@ -30,7 +29,7 @@ namespace RBAList.Core.Models
         public double? AskingPrice { get; set; }
         public double? RetailPrice { get; set; }  
         public bool Sold { get; set; }
-        public string ImageGuid { get; set; }
+        public int? ImageId { get; set; }
         public string UserId { get; set; }
 
     }
