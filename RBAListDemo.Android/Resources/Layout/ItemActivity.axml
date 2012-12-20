@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:minWidth="25px"
+    p1:minHeight="25px"
+    p1:layout_width="fill_parent"
+    p1:layout_height="fill_parent"
+    p1:id="@+id/relativeLayout1">
+    <TextView
+        p1:text="What Do You Want To Sell?"
+        p1:textAppearance="?android:attr/textAppearanceLarge"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/textView1" />
+    <EditText
+        p1:layout_width="fill_parent"
+        p1:layout_height="wrap_content"
+        p1:layout_below="@id/textView1"
+        p1:id="@+id/txtName"
+        p1:hint="Product Name" />
+    <EditText
+        p1:inputType="textMultiLine"
+        p1:layout_width="fill_parent"
+        p1:layout_height="wrap_content"
+        p1:layout_below="@id/txtName"
+        p1:id="@+id/txtDescription"
+        p1:hint="Description"
+        p1:lines="3"
+        p1:gravity="top" />
+    <EditText
+        p1:inputType="numberDecimal"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:layout_below="@id/txtDescription"
+        p1:id="@+id/txtAsking"
+        p1:hint="Asking Price" />
+    <EditText
+        p1:inputType="numberDecimal"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/txtRetail"
+        p1:layout_below="@id/txtAsking"
+        p1:hint="Retail Price" />
+    <Button
+        p1:text="Add"
+        p1:layout_width="fill_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/btnAdd"
+        p1:layout_alignParentBottom="true" />
+    <LinearLayout
+        p1:orientation="vertical"
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="fill_parent"
+        p1:layout_height="fill_parent"
+        p1:layout_toRightOf="@id/txtAsking"
+        p1:id="@+id/linearLayout1"
+        p1:layout_below="@id/txtDescription"
+        p1:layout_above="@id/btnAdd"
+        p1:gravity="top">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            p1:layout_below="@id/txtDescription"
+            p1:id="@+id/progressBar1" />
+        <ImageView
+            p1:src="@android:drawable/ic_menu_gallery"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            p1:layout_below="@id/txtDescription"
+            p1:id="@+id/imgProduct"
+            p1:visibility="gone"
+            p1:layout_toRightOf="@id/txtAsking" />
+        <Button
+            p1:text="Add Image"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            p1:layout_below="@id/imgProduct"
+            p1:id="@+id/btnAddImage"
+            p1:layout_toRightOf="@id/txtAsking" />
+    </LinearLayout>
+</RelativeLayout>
