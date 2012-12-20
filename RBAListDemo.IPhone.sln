@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RBAListDemo.IPhone", "RBAListDemo.IPhone\RBAListDemo.IPhone.csproj", "{7585DF11-9732-485F-A858-118EE9ABA97C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RBAListDemo.Core.IPhone", "RBAList.Core\RBAListDemo.Core.IPhone.csproj", "{034F9603-E2A3-4779-815B-EF51FEE42D5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Release|iPhone.Build.0 = Release|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{034F9603-E2A3-4779-815B-EF51FEE42D5B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Debug|iPhone.Build.0 = Debug|iPhone
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Release|iPhone.ActiveCfg = Release|iPhone
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Release|iPhone.Build.0 = Release|iPhone
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{7585DF11-9732-485F-A858-118EE9ABA97C}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = RBAListDemo.IPhone\RBAListDemo.IPhone.csproj
+	EndGlobalSection
+EndGlobal
