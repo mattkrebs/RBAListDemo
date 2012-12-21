@@ -16,6 +16,9 @@ namespace RBAListDemo.IPhone
 		// class-level declarations
 		UIWindow window;
 
+
+		public UINavigationController RootNavigationController {get;set;}
+		public UIWindow MainWindow {get;set;}
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
 		// method you should instantiate the window, load the UI into it and then make the window
@@ -25,15 +28,28 @@ namespace RBAListDemo.IPhone
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
+
 			// create a new window instance based on the screen size
-			window = new UIWindow (UIScreen.MainScreen.Bounds);
+			MainWindow = new UIWindow(UIScreen.MainScreen.Bounds);
+
+			var currentHomeUiViewController = new HomeViewController();
+			RootNavigationController = new UINavigationController(currentHomeUiViewController);
+			MainWindow.RootViewController = RootNavigationController;
 			
-			// If you have defined a view, add it here:
-			// window.AddSubview (navigationController.View);
+			var titleTextAttributes = new UITextAttributes();
+			titleTextAttributes.TextColor = UIColor.FromRGB(25, 83, 135);
+			titleTextAttributes.TextShadowColor = UIColor.Clear;
+			titleTextAttributes.Font = UIFont.SystemFontOfSize(16);
 			
-			// make the window visible
-			window.MakeKeyAndVisible ();
-			
+//			if (IsIOS5OrGreater)
+//			{
+//				UINavigationBar.Appearance.SetTitleTextAttributes(titleTextAttributes);
+//				UINavigationBar.Appearance.SetBackgroundImage(UIImage.FromBundle("/Images/top_bar_bg"), UIBarMetrics.Default);
+//			}
+//			
+		
+			MainWindow.MakeKeyAndVisible();
+
 			return true;
 		}
 	}

@@ -80,6 +80,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="MicrosoftAzureZumoiOS">
+      <HintPath>..\..\azure-mobile-services\sdk\xamarin\ios\src\Microsoft.Azure.Zumo.iOS\bin\iPhoneSimulator\Debug\MicrosoftAzureZumoiOS.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoTouch.Dialog-1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -91,12 +95,20 @@
     <Compile Include="Views\HomeViewController.designer.cs">
       <DependentUpon>HomeViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\ActiveItemTableController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Views\" />
+    <Folder Include="CustomControls\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\HomeViewController.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RBAList.Core\RBAListDemo.Core.IPhone.csproj">
+      <Project>{034F9603-E2A3-4779-815B-EF51FEE42D5B}</Project>
+      <Name>RBAListDemo.Core.IPhone</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
