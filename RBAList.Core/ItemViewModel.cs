@@ -35,6 +35,16 @@ namespace RBAList.Core
         
         }
 
+        public void AddPhoto(byte[] imgData)
+        {          
+            var strImg = Convert.ToBase64String(imgData);
+
+            if (this.ItemImage == null)
+                this.ItemImage = new ItemImage() { ImageBase64 = strImg };
+            else
+                this.ItemImage.ImageBase64 = strImg;
+
+        }
 
         
 

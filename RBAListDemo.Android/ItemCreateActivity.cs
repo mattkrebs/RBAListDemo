@@ -16,6 +16,7 @@ using RBAList.Core;
 using Android.Graphics;
 using Android.OS;
 using Xamarin.Media;
+using Android.Content;
 
 namespace RBAListDemo.Android
 {
@@ -32,6 +33,7 @@ namespace RBAListDemo.Android
         private ProgressBar _progress;
 
         private Stream _mediaFile;
+        private byte[] _bitmapData;
         
         protected override void OnCreate(Bundle bundle)
         {
@@ -68,12 +70,20 @@ namespace RBAListDemo.Android
 
                 using (var mediaFile = t.Result)
                 {
-                    _mediaFile = mediaFile.GetStream() ;
-                    Bitmap b = BitmapFactory.DecodeFile(t.Result.Path);
+                    _mediaFile = mediaFile.GetStream();
 
+                    Bitmap b = BitmapFactory.DecodeFile(t.Result.Path);
+                    
                     _imgProduct.Visibility = ViewStates.Visible;
                     _progress.Visibility = ViewStates.Gone;
-                    _imgProduct.SetImageBitmap(scaleDown(b, 1500, true));
+                    Bitmap scaledBitmap = scaleDown(b, 300, true);
+
+                    MemoryStream stream = new MemoryStream();
+                    scaledBitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, stream);
+                   _bitmapData = stream.ToArray();
+
+                   
+                    _imgProduct.SetImageBitmap(scaledBitmap);
                 }
                        
                 
@@ -106,18 +116,21 @@ namespace RBAListDemo.Android
             item.CreatedDate = DateTime.Now;
 
             itemViewModel.Item = item;
-            itemViewModel.AddPhoto(_mediaFile);
+            itemViewModel.AddPhoto(_bitmapData);            
 
-            
-
-            RBAListRepository.AddItemAsync(itemViewModel, SaveComplete);
+            RBAListPresenter.Current.AddItemAsync(itemViewModel, SaveComplete);
 
           
         }
 
         public void SaveComplete()
         {
-            StartActivity(typeof(ItemListActivity));
+            Toast.MakeText(this, "Save Successful", ToastLength.Short).Show();
+            Intent i = new Intent(this, typeof(ItemListActivity));
+            i.AddFlags(ActivityFlags.ClearTop);
+            StartActivity(i);
         }
+
+       
     }
 }

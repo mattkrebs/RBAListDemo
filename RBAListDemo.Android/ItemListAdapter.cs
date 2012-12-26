@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 namespace RBAListDemo.Android
 {
     
-    public class ItemAdapter : BaseAdapter<Item>
+    public class ItemAdapter : BaseAdapter<ItemViewModel>
     {
         public ItemAdapter(Context context)
         {
             this.inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);
            
-            RBAListRepository.GetItemsAsync(RefreshAsync);
+            RBAListPresenter.Current.GetItemsAsync(RefreshAsync);
             
         }
 
@@ -45,15 +45,15 @@ namespace RBAListDemo.Android
         {
             get { return true; }
         }
-
+        
         public override int Count
         {
             get { return this.items.Count; }
         }
 
-        public override Item this[int position]
+        public override ItemViewModel this[int position]
         {
-            get { return this.items[position].Item; }
+            get { return this.items[position]; }
         }
 
         public override long GetItemId(int position)
@@ -93,7 +93,7 @@ namespace RBAListDemo.Android
           
         }
 
-
+       
 
         private List<ItemViewModel> items = new List<ItemViewModel>();
 

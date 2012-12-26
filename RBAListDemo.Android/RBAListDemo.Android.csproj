@@ -39,7 +39,8 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.WindowsAzure.MobileServices.Android">
+    <Reference Include="Microsoft.WindowsAzure.MobileServices.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\azure-mobile-services\sdk\xamarin\android\src\Microsoft.Azure.Zumo.Android\bin\Debug\Microsoft.WindowsAzure.MobileServices.Android.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
@@ -55,11 +56,13 @@
   <ItemGroup>
     <Compile Include="DialogExtensions.cs" />
     <Compile Include="ItemCreateActivity.cs" />
+    <Compile Include="ItemDetailActivity.cs" />
     <Compile Include="ItemListActivity.cs" />
     <Compile Include="ItemListAdapter.cs" />
     <Compile Include="MediaFileHelper.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SplashScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -70,6 +73,10 @@
     <AndroidResource Include="Resources\Layout\ItemActivity.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\Layout\splashscreen.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\ItemDetails.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Layout\ItemListView.axml" />
@@ -88,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\Drawable\sprite.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

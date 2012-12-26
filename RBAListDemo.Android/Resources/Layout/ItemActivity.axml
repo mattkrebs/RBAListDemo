@@ -57,19 +57,12 @@
         p1:layout_below="@id/txtDescription"
         p1:layout_above="@id/btnAdd"
         p1:gravity="top">
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            p1:layout_width="wrap_content"
-            p1:layout_height="wrap_content"
-            p1:layout_below="@id/txtDescription"
-            p1:id="@+id/progressBar1" />
         <ImageView
             p1:src="@android:drawable/ic_menu_gallery"
             p1:layout_width="wrap_content"
             p1:layout_height="wrap_content"
             p1:layout_below="@id/txtDescription"
             p1:id="@+id/imgProduct"
-            p1:visibility="gone"
             p1:layout_toRightOf="@id/txtAsking" />
         <Button
             p1:text="Add Image"
