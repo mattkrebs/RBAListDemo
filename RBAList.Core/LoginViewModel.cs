@@ -28,9 +28,7 @@ namespace RBAList.Core
 					new LoginPlatform {Name = "Facebook", Provider = MobileServiceAuthenticationProvider.Facebook},
 					new LoginPlatform {Name = "Google", Provider = MobileServiceAuthenticationProvider.Google},
 					new LoginPlatform {Name = "Microsoft", Provider = MobileServiceAuthenticationProvider.MicrosoftAccount},
-				};
-
-         
+				};         
         }
 
         private List<LoginPlatform> _platforms;

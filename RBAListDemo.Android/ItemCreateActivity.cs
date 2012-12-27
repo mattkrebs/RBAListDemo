@@ -30,7 +30,7 @@ namespace RBAListDemo.Android
         private Button _btnAdd;
         private Button _btnAddImage;
         private ImageView _imgProduct;
-        private ProgressBar _progress;
+        
 
         private Stream _mediaFile;
         private byte[] _bitmapData;
@@ -44,7 +44,6 @@ namespace RBAListDemo.Android
             _txtDescription = FindViewById<EditText>(Resource.Id.txtDescription);
             _txtPrice = FindViewById<EditText>(Resource.Id.txtAsking);
             _txtRetail = FindViewById<EditText>(Resource.Id.txtRetail);
-            _progress = FindViewById<ProgressBar>(Resource.Id.progressBar1);
             
             _btnAdd = FindViewById<Button>(Resource.Id.btnAdd);
             _btnAdd.Click += _btnAdd_Click;
@@ -73,17 +72,15 @@ namespace RBAListDemo.Android
                     _mediaFile = mediaFile.GetStream();
 
                     Bitmap b = BitmapFactory.DecodeFile(t.Result.Path);
-                    
-                    _imgProduct.Visibility = ViewStates.Visible;
-                    _progress.Visibility = ViewStates.Gone;
                     Bitmap scaledBitmap = scaleDown(b, 300, true);
-
                     MemoryStream stream = new MemoryStream();
                     scaledBitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, stream);
                    _bitmapData = stream.ToArray();
 
-                   
-                    _imgProduct.SetImageBitmap(scaledBitmap);
+                   RunOnUiThread(() =>
+                   {                      
+                       _imgProduct.SetImageBitmap(scaledBitmap);
+                   });
                 }
                        
                 
@@ -114,7 +111,7 @@ namespace RBAListDemo.Android
 
             item.Description = _txtDescription.Text;
             item.CreatedDate = DateTime.Now;
-
+            item.UserId = SettingsPresenter.Current.UserId;
             itemViewModel.Item = item;
             itemViewModel.AddPhoto(_bitmapData);            
 

@@ -94,6 +94,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="menu\ListsView_Menu.xml" />
+    <AndroidResource Include="menu\ListView_Menu.xml" />
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\Drawable\sprite.png" />
   </ItemGroup>

@@ -23,7 +23,7 @@ namespace RBAListDemo.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
+            RequestWindowFeature(WindowFeatures.ActionBar);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.ItemListView);
 
@@ -54,6 +54,29 @@ namespace RBAListDemo.Android
             
         }
 
+        #region MENU
+
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.ListsView_Menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.addList:
+                    
+                    return true;
+                case Resource.Id.logout:
+                   
+                    return true;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+        #endregion
 
 
 
@@ -62,7 +85,8 @@ namespace RBAListDemo.Android
 
 
 
-        
+
+
     }
 }
 
