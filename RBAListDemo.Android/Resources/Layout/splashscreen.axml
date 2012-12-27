@@ -8,16 +8,24 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageView1"
-        android:layout_marginTop="100dp" />
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar1"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="90dp" />
     <Button
         android:text="Facebook Login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnFacebook" />
+        android:id="@+id/btnFacebook"
+        android:layout_margin="10dp" />
+    <Button
+        android:text="Twitter Login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnTwitter"
+        android:layout_margin="10dp" />
+    <Button
+        android:text="Microsoft Live Login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnMicrosoft"
+        android:layout_margin="10dp" />
 </LinearLayout>

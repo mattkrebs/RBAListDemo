@@ -15,7 +15,7 @@ using System.Globalization;
 
 namespace RBAListDemo.Android
 {
-    [Activity(Label = "My Activity")]
+    [Activity(Label = "Loading Details....", Icon = "@drawable/icon")]
     public class ItemDetailActivity : Activity
     {
         private TextView _txtRetail;
@@ -29,7 +29,7 @@ namespace RBAListDemo.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
+            RequestWindowFeature(WindowFeatures.ActionBar);
             SetContentView(Resource.Layout.ItemDetails);
 
             _txtName = FindViewById<TextView>(Resource.Id.txtName);
@@ -38,6 +38,8 @@ namespace RBAListDemo.Android
             _txtRetail = FindViewById<TextView>(Resource.Id.txtRetail);
             _imgItem = FindViewById<ImageView>(Resource.Id.imgItem);
 
+            
+
 
         }
 
@@ -45,9 +47,12 @@ namespace RBAListDemo.Android
         protected override void OnResume()
         {
             base.OnResume();
+           
+
 
             ItemViewModel product = RBAListPresenter.Current.CurrentViewModel;
             _txtName.Text = product.Item.Name;
+            Title = product.Item.Name;
             _txtDescription.Text = product.Item.Description;
             _txtPrice.Text = string.Format("${0:0.00}", product.Item.AskingPrice);
             _txtRetail.Text = string.Format("${0:0.00}", product.Item.RetailPrice);

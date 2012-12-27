@@ -12,7 +12,7 @@ namespace RBAList.Core
 {
     public class RBAListPresenter
     {
-        public readonly MobileServiceClient MobileService = new MobileServiceClient("https://choicetest.azure-mobile.net/", "YEvwSAlNbuwdouUHcJjZEUeEQgnyJP18");
+        public MobileServiceClient MobileService = new MobileServiceClient("https://choicetest.azure-mobile.net/", "YEvwSAlNbuwdouUHcJjZEUeEQgnyJP18");
 
 
         private static RBAListPresenter _presenter;
@@ -25,7 +25,11 @@ namespace RBAList.Core
         public ItemViewModel CurrentViewModel { get; set; }
 
         #region DataAccess
+        public void Logout()
+        {
+            MobileService = new MobileServiceClient("https://choicetest.azure-mobile.net/", "YEvwSAlNbuwdouUHcJjZEUeEQgnyJP18");
 
+        }
         public void GetItemsAsync(Action<List<ItemViewModel>> success)
         {
             List<ItemViewModel> RummageItems = new List<ItemViewModel>();
@@ -118,14 +122,14 @@ namespace RBAList.Core
                 tItem.ImageGuid = string.Empty;
 
             var continuation = new Action<Task>(t =>
-            {
+            {               
                 success();
             });
 
             if (tItem.Id <= 0)
-                MobileService.GetTable<Item>().InsertAsync(tItem).ContinueWith(continuation);
+                MobileService.GetTable<Item>().InsertAsync(tItem).ContinueWith(continuation, TaskScheduler.FromCurrentSynchronizationContext());
             else
-                MobileService.GetTable<Item>().UpdateAsync(tItem).ContinueWith(continuation);
+                MobileService.GetTable<Item>().UpdateAsync(tItem).ContinueWith(continuation, TaskScheduler.FromCurrentSynchronizationContext());
         }
         #endregion
 

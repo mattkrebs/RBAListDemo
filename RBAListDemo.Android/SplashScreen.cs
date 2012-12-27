@@ -17,23 +17,39 @@ using RBAList.Core.Models;
 
 namespace RBAListDemo.Android
 {
-    [Activity(Label = "RBA List", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Login", MainLauncher = true, Icon = "@drawable/icon")]
     public class SplashScreen : Activity
     {
 
         private Button _btnFacebook;
+        private Button _btnTwitter;
+        private Button _btnMicrosoft;
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.splashscreen);
-
+            SettingsPresenter.Current.Load();
 
             _btnFacebook = FindViewById<Button>(Resource.Id.btnFacebook);
             _btnFacebook.Click += _btnFacebook_Click;
+            _btnTwitter = FindViewById<Button>(Resource.Id.btnTwitter);
+            _btnTwitter.Click += _btnTwitter_Click;
+            _btnMicrosoft = FindViewById<Button>(Resource.Id.btnMicrosoft);
+            _btnMicrosoft.Click += _btnMicrosoft_Click;
 
             CheckLogin();
 
 
+        }
+
+        void _btnMicrosoft_Click(object sender, EventArgs e)
+        {
+            Login(new LoginPlatform() { Name = "Microsoft", Provider = MobileServiceAuthenticationProvider.MicrosoftAccount });
+        }
+
+        void _btnTwitter_Click(object sender, EventArgs e)
+        {
+            Login(new LoginPlatform() { Name = "Twitter", Provider = MobileServiceAuthenticationProvider.Twitter });
         }
 
         void _btnFacebook_Click(object sender, EventArgs e)
@@ -44,6 +60,7 @@ namespace RBAListDemo.Android
 
         public void Login(LoginPlatform platform)
         {
+            RBAListPresenter.Current.Logout();
             RBAListPresenter.Current.MobileService.LoginAsync(this,platform.Provider).ContinueWith((t) => HandleLoginResult(t, platform));
 
         }
@@ -77,7 +94,7 @@ namespace RBAListDemo.Android
             {
                 RunOnUiThread(() =>
                     {
-                        Toast.MakeText(this, t.Exception.Message, ToastLength.Long).Show();
+                        Toast.MakeText(this,"Login Failed", ToastLength.Long).Show();
                     });
                 //Show Error
                 //ReportError("Login Failed!");

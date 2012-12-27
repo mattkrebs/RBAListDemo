@@ -74,5 +74,16 @@ namespace RBAList.Core
             {
             }
         }
+
+        public void Logout(Action callback)
+        {
+            var settings = this;
+
+            settings.UserId = string.Empty;
+            settings.AuthenticationProvider = -1;
+            settings.Save();
+
+            callback();
+        }
     }
 }

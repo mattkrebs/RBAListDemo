@@ -48,11 +48,11 @@ namespace RBAListDemo.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f060015
-			public const int addEntry = 2131099669;
+			// aapt resource value: 0x7f060014
+			public const int addEntry = 2131099668;
 			
-			// aapt resource value: 0x7f060013
-			public const int addList = 2131099667;
+			// aapt resource value: 0x7f060015
+			public const int addList = 2131099669;
 			
 			// aapt resource value: 0x7f060006
 			public const int btnAdd = 2131099654;
@@ -60,8 +60,14 @@ namespace RBAListDemo.Android
 			// aapt resource value: 0x7f060009
 			public const int btnAddImage = 2131099657;
 			
+			// aapt resource value: 0x7f060011
+			public const int btnFacebook = 2131099665;
+			
+			// aapt resource value: 0x7f060013
+			public const int btnMicrosoft = 2131099667;
+			
 			// aapt resource value: 0x7f060012
-			public const int btnFacebook = 2131099666;
+			public const int btnTwitter = 2131099666;
 			
 			// aapt resource value: 0x7f060010
 			public const int imageView1 = 2131099664;
@@ -78,11 +84,8 @@ namespace RBAListDemo.Android
 			// aapt resource value: 0x7f06000f
 			public const int listItems = 2131099663;
 			
-			// aapt resource value: 0x7f060014
-			public const int logout = 2131099668;
-			
-			// aapt resource value: 0x7f060011
-			public const int progressBar1 = 2131099665;
+			// aapt resource value: 0x7f060016
+			public const int logout = 2131099670;
 			
 			// aapt resource value: 0x7f060000
 			public const int relativeLayout1 = 2131099648;
@@ -92,9 +95,6 @@ namespace RBAListDemo.Android
 			
 			// aapt resource value: 0x7f06000d
 			public const int relativeLayout3 = 2131099661;
-			
-			// aapt resource value: 0x7f060016
-			public const int shareWishList = 2131099670;
 			
 			// aapt resource value: 0x7f060001
 			public const int textView1 = 2131099649;
@@ -149,10 +149,10 @@ namespace RBAListDemo.Android
 		{
 			
 			// aapt resource value: 0x7f050000
-			public const int ListsView_Menu = 2131034112;
+			public const int ItemCreate_Menu = 2131034112;
 			
 			// aapt resource value: 0x7f050001
-			public const int ListView_Menu = 2131034113;
+			public const int ListsView_Menu = 2131034113;
 			
 			private Menu()
 			{

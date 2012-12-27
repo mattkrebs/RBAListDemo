@@ -20,7 +20,7 @@ using Android.Content;
 
 namespace RBAListDemo.Android
 {
-    [Activity(Label = "My Activity")]
+    [Activity(Label = "New Item", Icon = "@drawable/icon")]
     public class ItemCreateActivity : Activity
     {
         private EditText _txtName;
@@ -127,6 +127,39 @@ namespace RBAListDemo.Android
             i.AddFlags(ActivityFlags.ClearTop);
             StartActivity(i);
         }
+
+        #region MENU
+
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.ItemCreate_Menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.addList:
+                    StartActivity(typeof(ItemCreateActivity));
+                    return true;
+                case Resource.Id.logout:
+                    SettingsPresenter.Current.Logout(Redirect);
+                    return true;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+
+        public void Redirect()
+        {
+            Intent i = new Intent(this, typeof(SplashScreen));
+            i.AddFlags(ActivityFlags.ClearTop);
+            StartActivity(i);
+        }
+
+
+        #endregion
 
        
     }

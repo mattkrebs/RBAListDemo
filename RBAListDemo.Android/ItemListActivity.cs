@@ -12,7 +12,7 @@ using RBAList.Core.Models;
 
 namespace RBAListDemo.Android
 {
-    [Activity(Label = "RBA List")]
+    [Activity(Label = "RBA List", Icon = "@drawable/icon")]
     public class ItemListActivity : Activity
     {
         int count = 1;
@@ -68,14 +68,23 @@ namespace RBAListDemo.Android
             switch (item.ItemId)
             {
                 case Resource.Id.addList:
-                    
+                    StartActivity(typeof(ItemCreateActivity));
                     return true;
-                case Resource.Id.logout:
-                   
+                case Resource.Id.logout:                   
+                    SettingsPresenter.Current.Logout(Redirect);                   
                     return true;
             }
             return base.OnOptionsItemSelected(item);
         }
+
+        public void Redirect()
+        {
+              Intent i = new Intent(this, typeof(SplashScreen));
+                    i.AddFlags(ActivityFlags.ClearTop);
+                    StartActivity(i);
+        }
+
+
         #endregion
 
 
