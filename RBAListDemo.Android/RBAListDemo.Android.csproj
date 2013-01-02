@@ -39,9 +39,8 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.WindowsAzure.MobileServices.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\azure-mobile-services\sdk\xamarin\android\src\Microsoft.Azure.Zumo.Android\bin\Debug\Microsoft.WindowsAzure.MobileServices.Android.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAzure.MobileServices.Android">
+      <HintPath>..\3rdParty\Microsoft.WindowsAzure.MobileServices.Android.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
@@ -50,7 +49,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Xamarin.Mobile">
-      <HintPath>..\..\xamarinmobileapipreview\Mono for Android\Xamarin.Mobile.dll</HintPath>
+      <HintPath>..\3rdParty\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

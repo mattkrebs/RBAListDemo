@@ -80,10 +80,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="MicrosoftAzureZumoiOS">
-      <HintPath>..\..\azure-mobile-services\sdk\xamarin\ios\src\Microsoft.Azure.Zumo.iOS\bin\iPhoneSimulator\Debug\MicrosoftAzureZumoiOS.dll</HintPath>
-    </Reference>
     <Reference Include="MonoTouch.Dialog-1" />
+    <Reference Include="MicrosoftAzureZumoiOS">
+      <HintPath>..\3rdParty\MicrosoftAzureZumoiOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
