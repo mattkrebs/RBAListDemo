@@ -32,7 +32,7 @@ namespace RBAListDemo.IPhone
 			// create a new window instance based on the screen size
 			MainWindow = new UIWindow(UIScreen.MainScreen.Bounds);
 
-			var currentHomeUiViewController = new HomeViewController();
+			var currentHomeUiViewController = new SplashViewController();
 			RootNavigationController = new UINavigationController(currentHomeUiViewController);
 			MainWindow.RootViewController = RootNavigationController;
 			

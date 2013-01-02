@@ -1,7 +1,7 @@
 
 using System;
 using System.Drawing;
-
+using System.Collections.Generic;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Microsoft.WindowsAzure.MobileServices;
@@ -31,7 +31,7 @@ namespace RBAListDemo.IPhone
 		public ActiveItemTableController itemController;
 
 	//	private static readonly MobileServiceClient MobileService = new MobileServiceClient(new Uri(""));
-		private readonly IMobileServiceTable<Item> todoTable = RBAList.Core.RBAListRepository.MobileService.GetTable<Item>();
+		private readonly List<Item> todoTable = new List<Item>();
 
 		public override void ViewDidLoad ()
 		{

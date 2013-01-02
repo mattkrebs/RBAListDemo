@@ -96,19 +96,29 @@
       <DependentUpon>HomeViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\ActiveItemTableController.cs" />
+    <Compile Include="Views\SplashViewController.cs" />
+    <Compile Include="Views\SplashViewController.designer.cs">
+      <DependentUpon>SplashViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="CustomControls\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\HomeViewController.xib" />
+    <InterfaceDefinition Include="Views\SplashViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RBAList.Core\RBAListDemo.Core.IPhone.csproj">
       <Project>{034F9603-E2A3-4779-815B-EF51FEE42D5B}</Project>
       <Name>RBAListDemo.Core.IPhone</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Icon.png" />
+    <Content Include="Images\sprite.png" />
   </ItemGroup>
 </Project>

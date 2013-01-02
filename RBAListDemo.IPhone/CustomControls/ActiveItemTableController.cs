@@ -9,16 +9,18 @@ using MonoTouch.Dialog;
 using Microsoft.WindowsAzure.MobileServices;
 using RBAList.Core.Models;
 using System.Threading.Tasks;
+using RBAList.Core;
 
 namespace RBAListDemo.IPhone
 {
 		public class ActiveItemTableController: UITableViewSource
 		{
-			public ActiveItemTableController (UITableView view, IMobileServiceTable<Item> table)
+			public ActiveItemTableController (UITableView view, List<Item> table)
 			{
 				this.tableView = view;
-				this.table = table;
-				RefreshAsync();
+			   // this.items = table;
+			RBAListPresenter.Current.GetItemsAsync(RefreshAsync);
+				
 			}
 			
 			public event EventHandler IsUpdatingChanged;
@@ -36,16 +38,11 @@ namespace RBAListDemo.IPhone
 				}
 			}
 			
-			public void RefreshAsync()
+		public void RefreshAsync(List<ItemViewModel> returnedItems)
 			{
 				IsUpdating = true;
-				//			this.table.Where (ti => !ti.Complete).ToListAsync()
-				//				.ContinueWith (t =>
-				//				               {
-				//					this.items = t.Result;
-				//					this.tableView.ReloadData();
-				//					IsUpdating = false;
-				//				}, scheduler);
+				this.items = returnedItems;
+				this.tableView.ReloadData();
 			}
 			
 			public void Insert (Item item)
@@ -53,20 +50,12 @@ namespace RBAListDemo.IPhone
 				IsUpdating = true;
 				
 				NSIndexPath path = NSIndexPath.Create (this.items.Count);
-				this.items.Add (item);
+				//this.items.Add (item);
 				
 				this.tableView.InsertRows (new[] { path }, UITableViewRowAnimation.Automatic);
 				
-				this.table.InsertAsync (item).ContinueWith (t =>
-				                                            {
-					if (t.IsFaulted)
-					{
-						this.items.Remove (item);
-						this.tableView.DeleteRows (new[] { path }, UITableViewRowAnimation.Automatic);
-					}
-					
-					IsUpdating = false;
-				}, scheduler);
+				
+				
 			}
 			
 			public override int RowsInSection (UITableView tableview, int section)
@@ -85,7 +74,7 @@ namespace RBAListDemo.IPhone
 				
 				var item = this.items[indexPath.Row];
 				//			cell.Accessory = item.Complete ? UITableViewCellAccessory.Checkmark : UITableViewCellAccessory.None;
-				cell.TextLabel.Text = item.Name;
+				cell.TextLabel.Text = item.Item.Name;
 				
 				return cell;
 			}
@@ -94,24 +83,15 @@ namespace RBAListDemo.IPhone
 			{
 				IsUpdating = true;
 				
-				Item item = this.items[indexPath.Row];
+				ItemViewModel item = this.items[indexPath.Row];
 				//			item.Complete = true;
 				
-				this.tableView.ReloadRows (new[] { indexPath }, UITableViewRowAnimation.Automatic);
-				this.table.UpdateAsync (item)
-					.ContinueWith (t => 
-					               {
-						this.items.RemoveAt (indexPath.Row);
-						this.tableView.ReloadData();
-						
-						IsUpdating = false;
-					}, scheduler);
+				
 			}
 			
 			private bool isUpdating;
 			private UITableView tableView;
-			private IMobileServiceTable<Item> table;
-			private List<Item> items;
+			private List<ItemViewModel> items;
 			private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
 		}
 	}
