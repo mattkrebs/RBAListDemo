@@ -9,13 +9,16 @@
         p1:src="@android:drawable/ic_menu_gallery"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
-        p1:id="@+id/imgItem" />
+        p1:id="@+id/imgItem"
+        p1:maxWidth="130dp" />
     <TextView
         p1:text="Text"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
         p1:layout_toRightOf="@id/imgItem"
-        p1:id="@+id/txtName" />
+        p1:id="@+id/txtName"
+        p1:textSize="20dp"
+        p1:textStyle="bold" />
     <TextView
         p1:text="Text"
         p1:layout_width="wrap_content"
@@ -49,4 +52,10 @@
         p1:layout_toRightOf="@id/textView3"
         p1:id="@+id/txtRetail"
         p1:layout_below="@id/txtAsking" />
+    <Button
+        p1:text="I Want This (Coming Soon)"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:layout_below="@id/textView3"
+        p1:id="@+id/button1" />
 </RelativeLayout>

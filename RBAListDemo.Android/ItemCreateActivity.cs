@@ -72,7 +72,7 @@ namespace RBAListDemo.Android
                     _mediaFile = mediaFile.GetStream();
 
                     Bitmap b = BitmapFactory.DecodeFile(t.Result.Path);
-                    Bitmap scaledBitmap = scaleDown(b, 300, true);
+                    Bitmap scaledBitmap = scaleDown(b, 960, true);
                     MemoryStream stream = new MemoryStream();
                     scaledBitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, stream);
                    _bitmapData = stream.ToArray();

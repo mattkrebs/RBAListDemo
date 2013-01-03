@@ -58,7 +58,11 @@ namespace RBAListDemo.Android
             _txtRetail.Text = string.Format("${0:0.00}", product.Item.RetailPrice);
 
             if (product.ItemImage != null)
-                _imgItem.SetImageDrawable((BitmapDrawable)MediaFileHelper.Convert(product.ItemImage.ImageBase64, typeof(BitmapDrawable), null, CultureInfo.CurrentCulture));
+            {
+                BitmapDrawable drawable = (BitmapDrawable)MediaFileHelper.Convert(product.ItemImage.ImageBase64, typeof(BitmapDrawable), null, CultureInfo.CurrentCulture);
+             
+                _imgItem.SetImageDrawable(drawable);
+            }
 
 
 
