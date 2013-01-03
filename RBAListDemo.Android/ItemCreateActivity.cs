@@ -82,8 +82,6 @@ namespace RBAListDemo.Android
                        _imgProduct.SetImageBitmap(scaledBitmap);
                    });
                 }
-                       
-                
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
