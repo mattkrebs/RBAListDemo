@@ -1,44 +1,20 @@
 ﻿
 
 ###GETTING STARTED###
-At the time of creating this project, Wsh Lst makes heavy use of the latest version of MvvmCross which in turn uses Portable Class libraries (PCL’s) extensively.  At this time, there are a few tweaks you must make to your system(s) before you may be able to compile the project.  The main issue is that the Mono for Android and MonoTouch profiles do not recognize Portable Class Libraries (PCL’s) as valid profile types to reference.  We need to ‘trick’ visual studio into allowing us to reference these PCL’s.
+1. Download the Xamarin tools  www.xamarin.com 
+2. Make sure you have the IOS sdk or Android SDK installed with at least 4.0
+
 
 #####Windows Setup:#####
-Since this app uses prebuilt binaries of MvvmCross, it should build for you as is, however if you have porblems getting the Android app to build, we need to trick Visual Studio Mono for Android projects to be able to reference Portable Class Libraries:
-
-1. Open the folder: *C:\Program Files (x86)\Referenced Assemblies\Microsoft\Framework\.NETPortable\v4.0\Profile\Profile104\SupportedFrameworks\\*
-2. Create a new file named *MonoAndroid,Version=v1.6+.xml* with the following contents:
-
-	```
-	<?xml version="1.0" encoding="utf-8"?>
-	<Framework DisplayName="Mono for Android"
-	  Identifier="MonoAndroid"
-	  Profile="*"
-	  MinimumVersion="1.6"
-	  MaximumVersion="*" />
-	```
-3. If you had Visual Studio open, you'll need to restart it
-
-
+Download and install the Android SDK
+Open up the sdk manager from the install folder and install the 4.0 + sdks and x86 emulators
 
 #####Mac Setup:######
-At this time, you should have no problems opening the MonoTouch and Mono for Android projects on the mac.
-
-If you do have issues, try the following:
-
-1. Edit the file */Library/Frameworks/Mono.framework/Versions/Current/lib/mono/xbuild/Microsoft/Portable/v4.0/Microsoft.Portable.CSharp.targets*
-2. Find the PropertyGroup that sets *<TargetFrameworkIdentifier>MonoTouch</TargetFrameworkIdentifier>*
-3. Ensure the following lines exist in this PropertyGroup:
-
-	```
-	<CscToolExe>smcs</CscToolExe>
-	<CscToolPath>/Developer/MonoTouch/usr/bin</CscToolPath>
-	```
-
+Download and install the IOS sdk and tool set
 
 #####Azure Setup:#####
 1. Create a new Azure Mobile Service and open its dashboard
-2. Note the *MOBILE SERVICE URL* (eg: https://wshlst.azure-mobile.net) on the right hand side
+2. Note the *MOBILE SERVICE URL* (eg: https://rbalist.azure-mobile.net) on the right hand side
 3. Click the *Manage Keys* button at the bottom.  Note the Application Key.
 4. Edit the *WshLst.Core\Config.cs* file
 	1. Set the AZURE\_MOBILE\_SERVICE\_URL constant value to the URL from step 2 (make sure you do NOT have a trailing slash)
