@@ -1,30 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+using System.Globalization;
 using Android.App;
-using Android.Content;
+using Android.Graphics.Drawables;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using RBAList.Core;
-using Android.Graphics.Drawables;
-using System.Globalization;
 
 namespace RBAListDemo.Android
 {
     [Activity(Label = "Loading Details....", Icon = "@drawable/icon")]
     public class ItemDetailActivity : Activity
     {
-        private TextView _txtRetail;
-        private TextView _txtPrice;
+        #region Variables
+
+        private ImageView _imgItem;
         private TextView _txtDescription;
         private TextView _txtName;
-        private ImageView _imgItem;
+        private TextView _txtPrice;
+        private TextView _txtRetail;
 
-        
+        #endregion
+
+
+        #region Methods
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -37,20 +35,14 @@ namespace RBAListDemo.Android
             _txtPrice = FindViewById<TextView>(Resource.Id.txtAsking);
             _txtRetail = FindViewById<TextView>(Resource.Id.txtRetail);
             _imgItem = FindViewById<ImageView>(Resource.Id.imgItem);
-
-            
-
-
         }
 
 
         protected override void OnResume()
         {
             base.OnResume();
-           
 
-
-            ItemViewModel product = RBAListPresenter.Current.CurrentViewModel;
+            var product = RBAListPresenter.Current.CurrentViewModel;
             _txtName.Text = product.Item.Name;
             Title = product.Item.Name;
             _txtDescription.Text = product.Item.Description;
@@ -59,13 +51,12 @@ namespace RBAListDemo.Android
 
             if (product.ItemImage != null)
             {
-                BitmapDrawable drawable = (BitmapDrawable)MediaFileHelper.Convert(product.ItemImage.ImageBase64, typeof(BitmapDrawable), null, CultureInfo.CurrentCulture);
-             
+                var drawable = (BitmapDrawable) MediaFileHelper.Convert(product.ItemImage.ImageBase64, typeof (BitmapDrawable), null, CultureInfo.CurrentCulture);
+
                 _imgItem.SetImageDrawable(drawable);
             }
-
-
-
         }
+
+        #endregion
     }
 }

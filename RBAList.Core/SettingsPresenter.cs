@@ -1,27 +1,41 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO.IsolatedStorage;
 using System.IO;
+using System.IO.IsolatedStorage;
 using Newtonsoft.Json;
 
 namespace RBAList.Core
 {
     public class SettingsPresenter : ISettingsProvider
     {
+        #region Variables
 
         private static SettingsPresenter _presenter;
+
+        #endregion
+
+
+        #region Properties
+
         public static SettingsPresenter Current
         {
             get { return _presenter ?? (_presenter = new SettingsPresenter()); }
         }
 
-        public SettingsPresenter()
+        #endregion
+
+
+        #region Constructors
+
+        private SettingsPresenter()
         {
             UserId = string.Empty;
             AuthenticationProvider = -1;
         }
+
+        #endregion
+
+
+        #region ISettingsProvider Members
 
         public string UserId { get; set; }
         public int AuthenticationProvider { get; set; }
@@ -30,13 +44,17 @@ namespace RBAList.Core
         {
             try
             {
-                var json = string.Empty;
+                string json;
 
                 using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
-                using (var file = new IsolatedStorageFileStream("Settings.json", FileMode.Open, isolatedStorage))
-                using (var sw = new StreamReader(file))
                 {
-                    json = sw.ReadToEnd();
+                    using (var file = new IsolatedStorageFileStream("Settings.json", FileMode.Open, isolatedStorage))
+                    {
+                        using (var sw = new StreamReader(file))
+                        {
+                            json = sw.ReadToEnd();
+                        }
+                    }
                 }
 
                 var settings = JsonConvert.DeserializeObject<SettingsPresenter>(json);
@@ -45,8 +63,7 @@ namespace RBAList.Core
                 AuthenticationProvider = settings.AuthenticationProvider;
             }
             catch (Exception)
-            {
-            }
+            {}
         }
 
         public void Save()
@@ -56,17 +73,25 @@ namespace RBAList.Core
                 var json = JsonConvert.SerializeObject(this);
 
                 using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
-                using (var file = new IsolatedStorageFileStream("Settings.json", FileMode.Create, isolatedStorage))
-                using (var sw = new StreamWriter(file))
                 {
-                    sw.Write(json);
-                    sw.Flush();
+                    using (var file = new IsolatedStorageFileStream("Settings.json", FileMode.Create, isolatedStorage))
+                    {
+                        using (var sw = new StreamWriter(file))
+                        {
+                            sw.Write(json);
+                            sw.Flush();
+                        }
+                    }
                 }
             }
             catch (Exception)
-            {
-            }
+            {}
         }
+
+        #endregion
+
+
+        #region Methods
 
         public void Logout(Action callback)
         {
@@ -78,5 +103,7 @@ namespace RBAList.Core
 
             callback();
         }
+
+        #endregion
     }
 }

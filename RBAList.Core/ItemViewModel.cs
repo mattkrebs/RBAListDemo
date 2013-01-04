@@ -1,21 +1,23 @@
-using RBAList.Core.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-
+using RBAList.Core.Models;
 
 namespace RBAList.Core
 {
     public class ItemViewModel
     {
+        #region Properties
+
         public Item Item { get; set; }
 
         public ItemImage ItemImage { get; set; }
 
         public bool IsLoading { get; set; }
 
+        #endregion
+
+
+        #region Methods
 
         public void AddPhoto(Stream base64ImageStream)
         {
@@ -28,26 +30,34 @@ namespace RBAList.Core
 
             var strImg = Convert.ToBase64String(imgData);
 
-            if (this.ItemImage == null)
-                this.ItemImage = new ItemImage() { ImageBase64 = strImg };
+            if (ItemImage == null)
+            {
+                ItemImage = new ItemImage {
+                    ImageBase64 = strImg
+                };
+            }
             else
-                this.ItemImage.ImageBase64 = strImg;
-        
+            {
+                ItemImage.ImageBase64 = strImg;
+            }
         }
 
         public void AddPhoto(byte[] imgData)
-        {          
+        {
             var strImg = Convert.ToBase64String(imgData);
 
-            if (this.ItemImage == null)
-                this.ItemImage = new ItemImage() { ImageBase64 = strImg };
+            if (ItemImage == null)
+            {
+                ItemImage = new ItemImage {
+                    ImageBase64 = strImg
+                };
+            }
             else
-                this.ItemImage.ImageBase64 = strImg;
-
+            {
+                ItemImage.ImageBase64 = strImg;
+            }
         }
 
-        
-
-        
+        #endregion
     }
 }

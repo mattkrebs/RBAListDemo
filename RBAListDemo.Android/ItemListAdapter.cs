@@ -1,43 +1,48 @@
-﻿using Android.Content;
-using Android.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading.Tasks;
+using Android.Content;
 using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
-using Microsoft.WindowsAzure.MobileServices;
 using RBAList.Core;
-using RBAList.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RBAListDemo.Android
 {
-    
     public class ItemAdapter : BaseAdapter<ItemViewModel>
     {
-        public ItemAdapter(Context context)
-        {
-            this.inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);
-           
-            RBAListPresenter.Current.GetItemsAsync(RefreshAsync);
-            
-        }
+        #region Events & Delegates
 
         public event EventHandler IsUpdatingChanged;
 
+        #endregion
+
+
+        #region Variables
+
+        private readonly LayoutInflater inflater;
+        private bool isUpdating;
+        private List<ItemViewModel> items = new List<ItemViewModel>();
+        private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
+        #endregion
+
+
+        #region Properties
+
         public bool IsUpdating
         {
-            get { return this.isUpdating; }
+            get { return isUpdating; }
             private set
             {
-                this.isUpdating = value;
+                isUpdating = value;
 
                 var changed = IsUpdatingChanged;
                 if (changed != null)
+                {
                     changed(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -45,40 +50,59 @@ namespace RBAListDemo.Android
         {
             get { return true; }
         }
-        
+
         public override int Count
         {
-            get { return this.items.Count; }
+            get { return items.Count; }
         }
 
         public override ItemViewModel this[int position]
         {
-            get { return this.items[position]; }
+            get { return items[position]; }
         }
+
+        #endregion
+
+
+        #region Constructors
+
+        public ItemAdapter(Context context)
+        {
+            inflater = (LayoutInflater) context.GetSystemService(Context.LayoutInflaterService);
+
+            RBAListPresenter.Current.GetItemsAsync(RefreshAsync);
+        }
+
+        #endregion
+
+
+        #region Methods
 
         public override long GetItemId(int position)
         {
-            return this.items[position].Item.Id;
+            return items[position].Item.Id;
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            ItemViewModel product = this.items[position];
+            ItemViewModel product = items[position];
 
-            View view = this.inflater.Inflate(Resource.Layout.ItemListItemView, null);
+            View view = inflater.Inflate(Resource.Layout.ItemListItemView, null);
 
 
-            ImageView image = view.FindViewById<ImageView>(Resource.Id.imgItem);
-            TextView name = view.FindViewById<TextView>(Resource.Id.txtName);
-            TextView description = view.FindViewById<TextView>(Resource.Id.txtDescription);
-            TextView amount = view.FindViewById<TextView>(Resource.Id.txtPrice);
+            var image = view.FindViewById<ImageView>(Resource.Id.imgItem);
+            var name = view.FindViewById<TextView>(Resource.Id.txtName);
+            var description = view.FindViewById<TextView>(Resource.Id.txtDescription);
+            var amount = view.FindViewById<TextView>(Resource.Id.txtPrice);
 
             name.Text = product.Item.Name;
             description.Text = product.Item.Description;
             amount.Text = string.Format("${0:0.00}", product.Item.AskingPrice);
 
             if (product.ItemImage != null)
-                image.SetImageDrawable((BitmapDrawable)MediaFileHelper.Convert(product.ItemImage.ImageBase64, typeof(BitmapDrawable), null, CultureInfo.CurrentCulture));
+            {
+                image.SetImageDrawable((BitmapDrawable) MediaFileHelper.Convert(product.ItemImage.ImageBase64, typeof (BitmapDrawable), null, CultureInfo.CurrentCulture));
+            }
 
 
             return view;
@@ -88,17 +112,10 @@ namespace RBAListDemo.Android
         {
             IsUpdating = true;
 
-            this.items = returnedItems;
+            items = returnedItems;
             NotifyDataSetChanged();
-          
         }
 
-       
-
-        private List<ItemViewModel> items = new List<ItemViewModel>();
-
-        private readonly LayoutInflater inflater;
-        private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-        private bool isUpdating;
+        #endregion
     }
 }

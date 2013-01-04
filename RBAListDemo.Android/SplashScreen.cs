@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using System.Threading.Tasks;
-using System.Threading;
 using RBAList.Core;
 using Microsoft.WindowsAzure.MobileServices;
 using RBAList.Core.Models;
@@ -20,10 +13,17 @@ namespace RBAListDemo.Android
     [Activity(Label = "Login", MainLauncher = true, Icon = "@drawable/icon")]
     public class SplashScreen : Activity
     {
+        #region Variables
 
         private Button _btnFacebook;
-        private Button _btnTwitter;
         private Button _btnMicrosoft;
+        private Button _btnTwitter;
+
+        #endregion
+
+
+        #region Methods
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -38,36 +38,26 @@ namespace RBAListDemo.Android
             _btnMicrosoft.Click += _btnMicrosoft_Click;
 
             CheckLogin();
-
-
         }
 
-        void _btnMicrosoft_Click(object sender, EventArgs e)
+        private void CheckLogin()
         {
-            Login(new LoginPlatform() { Name = "Microsoft", Provider = MobileServiceAuthenticationProvider.MicrosoftAccount });
+            var settings = SettingsPresenter.Current;
+            if (settings.AuthenticationProvider < 0)
+            {
+                return;
+            }
+
+            var provider = (MobileServiceAuthenticationProvider) Enum.Parse(typeof (MobileServiceAuthenticationProvider), settings.AuthenticationProvider.ToString());
+
+            Login(new LoginPlatform {
+                Provider = provider,
+                Name = string.Empty
+            });
         }
 
-        void _btnTwitter_Click(object sender, EventArgs e)
+        private void HandleLoginResult(Task<MobileServiceUser> t, LoginPlatform platform = null)
         {
-            Login(new LoginPlatform() { Name = "Twitter", Provider = MobileServiceAuthenticationProvider.Twitter });
-        }
-
-        void _btnFacebook_Click(object sender, EventArgs e)
-        {
-            Login(new LoginPlatform() { Name = "Facebook", Provider = MobileServiceAuthenticationProvider.Facebook });
-        }
-
-
-        public void Login(LoginPlatform platform)
-        {
-            RBAListPresenter.Current.Logout();
-            RBAListPresenter.Current.MobileService.LoginAsync(this,platform.Provider).ContinueWith((t) => HandleLoginResult(t, platform));
-
-        }
-        public void HandleLoginResult(Task<MobileServiceUser> t, LoginPlatform platform = null)
-        {
-           
-
             if (t.Status == TaskStatus.RanToCompletion && t.Result != null && !string.IsNullOrEmpty(t.Result.UserId))
             {
                 //Save our app settings for next launch
@@ -76,39 +66,59 @@ namespace RBAListDemo.Android
                 settings.UserId = t.Result.UserId;
 
                 if (platform != null)
-                    settings.AuthenticationProvider = (int)platform.Provider;
+                {
+                    settings.AuthenticationProvider = (int) platform.Provider;
+                }
 
                 settings.Save();
                 RunOnUiThread(() =>
-                    {
-                        Toast.MakeText(this, "Login Successful", ToastLength.Long).Show();
-                        //Navigate to the Lists view
-                        //RequestNavigate<WishListsViewModel>();
-                        Intent i = new Intent(this, typeof(ItemListActivity));
-                        i.AddFlags(ActivityFlags.ClearTop);
-                        StartActivity(i);
-                    });
-
+                {
+                    Toast.MakeText(this, "Login Successful", ToastLength.Long).Show();
+                    //Navigate to the Lists view
+                    //RequestNavigate<WishListsViewModel>();
+                    var i = new Intent(this, typeof (ItemListActivity));
+                    i.AddFlags(ActivityFlags.ClearTop);
+                    StartActivity(i);
+                });
             }
             else
             {
-                RunOnUiThread(() =>
-                    {
-                        Toast.MakeText(this,"Login Failed", ToastLength.Long).Show();
-                    });
+                RunOnUiThread(() => { Toast.MakeText(this, "Login Failed", ToastLength.Long).Show(); });
                 //Show Error
                 //ReportError("Login Failed!");
             }
         }
 
-        public void CheckLogin()
+        private void Login(LoginPlatform platform)
         {
-            var settings = SettingsPresenter.Current;
-            if (settings.AuthenticationProvider < 0) return;
-
-            var provider = (MobileServiceAuthenticationProvider)Enum.Parse(typeof(MobileServiceAuthenticationProvider), settings.AuthenticationProvider.ToString());
-
-            Login(new LoginPlatform { Provider = provider, Name = string.Empty });
+            RBAListPresenter.Current.Logout();
+            RBAListPresenter.Current.MobileService.LoginAsync(this, platform.Provider).ContinueWith((t) => HandleLoginResult(t, platform));
         }
+
+        private void _btnFacebook_Click(object sender, EventArgs e)
+        {
+            Login(new LoginPlatform {
+                Name = "Facebook",
+                Provider = MobileServiceAuthenticationProvider.Facebook
+            });
+        }
+
+        private void _btnMicrosoft_Click(object sender, EventArgs e)
+        {
+            Login(new LoginPlatform {
+                Name = "Microsoft",
+                Provider = MobileServiceAuthenticationProvider.MicrosoftAccount
+            });
+        }
+
+        private void _btnTwitter_Click(object sender, EventArgs e)
+        {
+            Login(new LoginPlatform {
+                Name = "Twitter",
+                Provider = MobileServiceAuthenticationProvider.Twitter
+            });
+        }
+
+        #endregion
     }
 }

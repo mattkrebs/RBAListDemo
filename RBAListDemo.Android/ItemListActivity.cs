@@ -1,25 +1,27 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content;
-using Android.Runtime;
+using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Android.OS;
 using RBAList.Core;
-using System.Collections.Generic;
-using RBAList.Core.Models;
 
 namespace RBAListDemo.Android
 {
     [Activity(Label = "RBA List", Icon = "@drawable/icon")]
     public class ItemListActivity : Activity
     {
-        int count = 1;
-        private ListView _listView;
-        private ProgressBar _progress;
-        private Button _btnAdd;
+        #region Variables
+
         private ItemAdapter _adapter;
+        private Button _btnAdd;
+        private ListView _listView;
+
+        #endregion
+
+
+        #region Methods
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -36,26 +38,28 @@ namespace RBAListDemo.Android
             _listView.ItemClick += _listView_ItemClick;
         }
 
-        void _listView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
-        {
-            RBAListPresenter.Current.CurrentViewModel = _adapter[e.Position];
-            StartActivity(typeof(ItemDetailActivity));
-        }
-
-        void _btnAdd_Click(object sender, EventArgs e)
-        {
-            StartActivity(typeof(ItemCreateActivity));
-        }
         protected override void OnResume()
         {
             base.OnResume();
 
             _listView.Adapter = _adapter;
-            
         }
 
-        #region MENU
+        private void _btnAdd_Click(object sender, EventArgs e)
+        {
+            StartActivity(typeof (ItemCreateActivity));
+        }
 
+        private void _listView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            RBAListPresenter.Current.CurrentViewModel = _adapter[e.Position];
+            StartActivity(typeof (ItemDetailActivity));
+        }
+
+        #endregion
+
+
+        #region MENU
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -68,10 +72,10 @@ namespace RBAListDemo.Android
             switch (item.ItemId)
             {
                 case Resource.Id.addList:
-                    StartActivity(typeof(ItemCreateActivity));
+                    StartActivity(typeof (ItemCreateActivity));
                     return true;
-                case Resource.Id.logout:                   
-                    SettingsPresenter.Current.Logout(Redirect);                   
+                case Resource.Id.logout:
+                    SettingsPresenter.Current.Logout(Redirect);
                     return true;
             }
             return base.OnOptionsItemSelected(item);
@@ -79,23 +83,11 @@ namespace RBAListDemo.Android
 
         public void Redirect()
         {
-              Intent i = new Intent(this, typeof(SplashScreen));
-                    i.AddFlags(ActivityFlags.ClearTop);
-                    StartActivity(i);
+            var i = new Intent(this, typeof (SplashScreen));
+            i.AddFlags(ActivityFlags.ClearTop);
+            StartActivity(i);
         }
 
-
         #endregion
-
-
-
-
-
-
-
-
-
-
     }
 }
-

@@ -1,36 +1,32 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Xamarin.Media;
-using System.Threading.Tasks;
-using Android.Graphics.Drawables;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
+using Android.Content;
 using Android.Graphics;
+using Android.Graphics.Drawables;
+using Xamarin.Media;
 
-namespace RBAList.Core
+namespace RBAListDemo.Android
 {
     public class MediaFileHelper
     {
-        public Task<MediaFile> GetPhoto(bool takeNew, Context context)
+        #region Methods
+
+        public static object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var picker = new MediaPicker(context);
+            var base64 = (string) value;
 
-            return takeNew ? picker.TakePhotoAsync(new StoreCameraMediaOptions()) : picker.PickPhotoAsync();
+            var bytes = System.Convert.FromBase64String(base64);
+
+            var drawable = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
+
+            return new BitmapDrawable(drawable);
         }
-
 
         public static object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var bitmapDrawable = (BitmapDrawable)value;
+            var bitmapDrawable = (BitmapDrawable) value;
             using (var ms = new MemoryStream())
             {
                 bitmapDrawable.Bitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, ms);
@@ -39,15 +35,13 @@ namespace RBAList.Core
             }
         }
 
-        public static object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Task<MediaFile> GetPhoto(bool takeNew, Context context)
         {
-            var base64 = (string)value;
+            var picker = new MediaPicker(context);
 
-            var bytes = System.Convert.FromBase64String(base64);
-
-            var drawable = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
-
-            return new BitmapDrawable(drawable);
+            return takeNew ? picker.TakePhotoAsync(new StoreCameraMediaOptions()) : picker.PickPhotoAsync();
         }
+
+        #endregion
     }
 }

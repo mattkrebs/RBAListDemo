@@ -44,6 +44,10 @@
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\3rdParty\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -87,16 +91,16 @@
     <AndroidResource Include="Resources\Drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RBAList.Core\RBAList.Core.csproj">
-      <Project>{f28b0831-d98d-46cc-82a3-a8ee79d8072d}</Project>
-      <Name>RBAList.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="menu\ListsView_Menu.xml" />
     <AndroidResource Include="menu\ItemCreate_Menu.xml" />
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\Drawable\sprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RBAList.Core\RBAList.Core.Android.csproj">
+      <Project>{44a617f2-3c9e-4c7d-9ba4-24ff0188f84d}</Project>
+      <Name>RBAList.Core.Android</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
