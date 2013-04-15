@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
+using System.Web.Services;
 using Microsoft.WindowsAzure.MobileServices;
 using RBAList.Core.Models;
+using System.Net;
+using System.IO;
 
 namespace RBAList.Core
 {
@@ -55,29 +58,58 @@ namespace RBAList.Core
         {
             var itemImage = item.ItemImage;
             var tItem = item.Item;
+            
+           
+            //if (itemImage != null && !string.IsNullOrEmpty(itemImage.ImageBase64))
+            //{
+            //    tItem.ImageGuid = itemImage.ImageGuid;
+
+            //    var entryImageTable = MobileService.GetTable<ItemImage>();
+
+            //    entryImageTable.InsertAsync(itemImage).ContinueWith(t2 =>
+            //    {
+            //        var exception = t2.Exception;
+            //        if (exception != null)
+            //        {
+            //            Debug.WriteLine("Error Adding Image: " + exception.InnerException.StackTrace);
+            //        }
+            //    });
+            //}
+            //else
+            //{
+            //    tItem.ImageGuid = string.Empty;
+            //}
 
 
-            if (itemImage != null && !string.IsNullOrEmpty(itemImage.ImageBase64))
-            {
-                tItem.ImageGuid = itemImage.ImageGuid;
+            //Upload image with HttpClient to the blob service using the generated item.SAS
 
-                var entryImageTable = MobileService.GetTable<ItemImage>();
-
-                entryImageTable.InsertAsync(itemImage).ContinueWith(t2 =>
+            var client = new WebClient();
+           
+            var continuation = new Action<Task>(t => {
+                //Get a stream of the media just captured
+                try
                 {
-                    var exception = t2.Exception;
-                    if (exception != null)
-                    {
-                        Debug.WriteLine("Error Adding Image: " + exception.InnerException.StackTrace);
-                    }
-                });
-            }
-            else
-            {
-                tItem.ImageGuid = string.Empty;
-            }
+                    var request = (HttpWebRequest)WebRequest.Create(new Uri(tItem.SAS));
+                    var fileStream = System.Convert.FromBase64String(itemImage.ImageBase64);
+                    request.Method = "PUT";                    
+                    //request.Headers.Add("Content-Type", "image/jpeg");
+                    request.Headers.Add("x-ms-blob-type", "BlockBlob");
+                    Stream dataStream = request.GetRequestStream();
+                    dataStream.Write(fileStream, 0, fileStream.Length);
+                    dataStream.Close();
 
-            var continuation = new Action<Task>(t => success());
+                   // client.UploadDataAsync(new Uri(tItem.SAS), "PUT", fileStream);
+                    WebResponse response = request.GetResponse();
+
+                    Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.InnerException);    
+                }
+                        
+                success();            
+            });
 
             if (tItem.Id <= 0)
             {
@@ -126,32 +158,10 @@ namespace RBAList.Core
                 {
                     var currentItem = itemList[i];
                     var itemViewModel = new ItemViewModel();
-                    itemViewModel.Item = currentItem;
-
-                    var imageListTask = MobileService.GetTable<ItemImage>().Where(x => x.ImageGuid == currentItem.ImageGuid).ToListAsync();
-                    imageTaskArray[i] = imageListTask;
-                    var indexString = i.ToString(CultureInfo.InvariantCulture);
-
-                    Console.WriteLine("Set ItemImage Continuation: " + indexString);
-                    imageListTask.ContinueWith(imageListTaskContinue =>
-                    {
-                        Console.WriteLine("Begin Get ItemImage Continuation");
-                        if (imageListTaskContinue.Status == TaskStatus.RanToCompletion && imageListTaskContinue.Result != null && imageListTaskContinue.Result.Count > 0)
-                        {
-                            var image = (imageListTaskContinue.Result)[0];
-                            if (image != null)
-                            {
-                                itemViewModel.ItemImage = image;
-                            }
-                        }
-                        Console.WriteLine("End Get ItemImage Continuation: " + indexString);
-                    });
+                    itemViewModel.Item = currentItem;                  
 
                     itemViewModelList.Add(itemViewModel);
-                }
-
-                Task.WaitAll(imageTaskArray);
-                Console.WriteLine("All ItemImages Tasks Complete");
+                }             
 
                 successAction(itemViewModelList);
                 Console.WriteLine("Ending Get Item Continuation");

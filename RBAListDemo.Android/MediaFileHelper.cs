@@ -41,7 +41,15 @@ namespace RBAListDemo.Android
 
             return takeNew ? picker.TakePhotoAsync(new StoreCameraMediaOptions()) : picker.PickPhotoAsync();
         }
+        public static Bitmap scaleDown(Bitmap realImage, float maxImageSize, bool filter)
+        {
+            float ratio = Math.Min(maxImageSize / realImage.Width, maxImageSize / realImage.Height);
+            double width = Math.Round(ratio * realImage.Width);
+            double height = Math.Round(ratio * realImage.Height);
 
+            Bitmap newBitmap = Bitmap.CreateScaledBitmap(realImage, (int)width, (int)height, filter);
+            return newBitmap;
+        }
         #endregion
     }
 }

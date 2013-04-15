@@ -5,57 +5,29 @@
     p1:layout_width="fill_parent"
     p1:layout_height="fill_parent"
     p1:id="@+id/relativeLayout1">
-    <ImageView
-        p1:src="@android:drawable/ic_menu_gallery"
-        p1:layout_width="wrap_content"
+    <FrameLayout
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="fill_parent"
         p1:layout_height="wrap_content"
-        p1:id="@+id/imgItem"
-        p1:maxWidth="130dp" />
-    <TextView
-        p1:text="Text"
-        p1:layout_width="wrap_content"
-        p1:layout_height="wrap_content"
-        p1:layout_toRightOf="@id/imgItem"
-        p1:id="@+id/txtName"
-        p1:textSize="20dp"
-        p1:textStyle="bold" />
-    <TextView
-        p1:text="Text"
-        p1:layout_width="wrap_content"
-        p1:layout_height="wrap_content"
-        p1:layout_toRightOf="@id/imgItem"
-        p1:id="@+id/txtDescription"
-        p1:layout_below="@id/txtName" />
-    <TextView
-        p1:text="Asking Price:"
-        p1:layout_width="wrap_content"
-        p1:layout_height="wrap_content"
-        p1:layout_below="@id/imgItem"
-        p1:id="@+id/textView1" />
-    <TextView
-        p1:text="100.00"
-        p1:layout_width="wrap_content"
-        p1:layout_height="wrap_content"
-        p1:layout_below="@id/imgItem"
-        p1:id="@+id/txtAsking"
-        p1:layout_toRightOf="@id/textView1" />
-    <TextView
-        p1:text="Retail Price:"
-        p1:layout_width="wrap_content"
-        p1:layout_height="wrap_content"
-        p1:layout_below="@id/textView1"
-        p1:id="@+id/textView3" />
-    <TextView
-        p1:text="200.00"
-        p1:layout_width="wrap_content"
-        p1:layout_height="wrap_content"
-        p1:layout_toRightOf="@id/textView3"
-        p1:id="@+id/txtRetail"
-        p1:layout_below="@id/txtAsking" />
-    <Button
-        p1:text="I Want This (Coming Soon)"
-        p1:layout_width="wrap_content"
-        p1:layout_height="wrap_content"
-        p1:layout_below="@id/textView3"
-        p1:id="@+id/button1" />
+        p1:id="@+id/framelayout1">
+        <ImageView
+            p1:layout_width="fill_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/imgItem" />
+        <TextView
+            p1:text="Text"
+            p1:layout_width="fill_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/txtName"
+            p1:textSize="20dp"
+            p1:textStyle="bold"
+            p1:gravity="center"
+            p1:background="#666666BB"
+            p1:height="90dp" />
+        <ProgressBar
+            p1:layout_width="fill_parent"
+            p1:layout_height="fill_parent"
+            p1:id="@+id/progressBar1" />
+    </FrameLayout>
 </RelativeLayout>

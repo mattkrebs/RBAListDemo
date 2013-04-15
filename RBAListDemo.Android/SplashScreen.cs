@@ -27,9 +27,10 @@ namespace RBAListDemo.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
             SetContentView(Resource.Layout.splashscreen);
             SettingsPresenter.Current.Load();
-
+            
             _btnFacebook = FindViewById<Button>(Resource.Id.btnFacebook);
             _btnFacebook.Click += _btnFacebook_Click;
             _btnTwitter = FindViewById<Button>(Resource.Id.btnTwitter);
@@ -83,6 +84,7 @@ namespace RBAListDemo.Android
             }
             else
             {
+                
                 RunOnUiThread(() => { Toast.MakeText(this, "Login Failed", ToastLength.Long).Show(); });
                 //Show Error
                 //ReportError("Login Failed!");

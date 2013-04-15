@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="100dp">
     <RelativeLayout
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="100dp"
         android:id="@+id/relativeLayout1"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:gravity="top">
         <ImageView
             android:src="@android:drawable/ic_menu_gallery"
-            android:layout_width="100dp"
+            android:layout_width="100px"
             android:layout_height="wrap_content"
             android:id="@+id/imgItem" />
     </RelativeLayout>
@@ -20,7 +21,7 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="100dp"
         android:id="@+id/relativeLayout2"
         android:layout_weight="2">
         <TextView
@@ -41,7 +42,7 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/relativeLayout3"
         android:layout_weight="3">
         <TextView

@@ -69,14 +69,14 @@ namespace RBAListDemo.Android
 			// aapt resource value: 0x7f060013
 			public const int btnTwitter = 2131099667;
 			
-			// aapt resource value: 0x7f06000c
-			public const int button1 = 2131099660;
+			// aapt resource value: 0x7f06000a
+			public const int framelayout1 = 2131099658;
 			
 			// aapt resource value: 0x7f060011
 			public const int imageView1 = 2131099665;
 			
-			// aapt resource value: 0x7f06000a
-			public const int imgItem = 2131099658;
+			// aapt resource value: 0x7f06000b
+			public const int imgItem = 2131099659;
 			
 			// aapt resource value: 0x7f060008
 			public const int imgProduct = 2131099656;
@@ -90,6 +90,9 @@ namespace RBAListDemo.Android
 			// aapt resource value: 0x7f060017
 			public const int logout = 2131099671;
 			
+			// aapt resource value: 0x7f06000c
+			public const int progressBar1 = 2131099660;
+			
 			// aapt resource value: 0x7f060000
 			public const int relativeLayout1 = 2131099648;
 			
@@ -101,9 +104,6 @@ namespace RBAListDemo.Android
 			
 			// aapt resource value: 0x7f060001
 			public const int textView1 = 2131099649;
-			
-			// aapt resource value: 0x7f06000b
-			public const int textView3 = 2131099659;
 			
 			// aapt resource value: 0x7f060004
 			public const int txtAsking = 2131099652;

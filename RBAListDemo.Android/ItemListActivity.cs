@@ -25,15 +25,15 @@ namespace RBAListDemo.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            RequestWindowFeature(WindowFeatures.ActionBar);
+            //RequestWindowFeature(WindowFeatures.ActionBar);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.ItemListView);
-
+            ActionBar.SetDisplayShowHomeEnabled(false);
             // Get our button from the layout resource,
             // and attach an event to it
             _listView = FindViewById<ListView>(Resource.Id.listItems);
             _btnAdd = FindViewById<Button>(Resource.Id.btnAdd);
-            _btnAdd.Click += _btnAdd_Click;
+            //_btnAdd.Click += _btnAdd_Click;
             _adapter = new ItemAdapter(this);
             _listView.ItemClick += _listView_ItemClick;
         }
@@ -41,14 +41,14 @@ namespace RBAListDemo.Android
         protected override void OnResume()
         {
             base.OnResume();
-
-            _listView.Adapter = _adapter;
+            if (_listView.Adapter == null)
+                _listView.Adapter = _adapter;
         }
 
-        private void _btnAdd_Click(object sender, EventArgs e)
-        {
-            StartActivity(typeof (ItemCreateActivity));
-        }
+        //private void _btnAdd_Click(object sender, EventArgs e)
+        //{
+        //    StartActivity(typeof (ItemCreateActivity));
+        //}
 
         private void _listView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {

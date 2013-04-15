@@ -47,12 +47,16 @@ namespace RBAListDemo.Android
             _btnAddImage = FindViewById<Button>(Resource.Id.btnAddImage);
             _btnAddImage.Click += (s, e) => this.ShowQuestion("Add Photo", "Would you like to Choose an existing photo or Take a New one?", "Take New", "Choose Existing", () => AddPhoto(true), () => AddPhoto(false));
             _imgProduct = FindViewById<ImageView>(Resource.Id.imgProduct);
+
+            
+            
         }
 
-
+        
         private void AddPhoto(bool takeNew)
         {
             var mediaFileSource = new MediaFileHelper();
+            
             mediaFileSource.GetPhoto(takeNew, this).ContinueWith(t =>
             {
                 var ex = t.Exception;
@@ -65,9 +69,10 @@ namespace RBAListDemo.Android
                 using (var mediaFile = t.Result)
                 {
                     _mediaFile = mediaFile.GetStream();
-
+                 
                     Bitmap b = BitmapFactory.DecodeFile(t.Result.Path);
-                    Bitmap scaledBitmap = scaleDown(b, 960, true);
+                    
+                    Bitmap scaledBitmap = MediaFileHelper.scaleDown(b, 960, true);
                     var stream = new MemoryStream();
                     scaledBitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, stream);
                     _bitmapData = stream.ToArray();
@@ -100,19 +105,12 @@ namespace RBAListDemo.Android
             item.UserId = SettingsPresenter.Current.UserId;
             itemViewModel.Item = item;
             itemViewModel.AddPhoto(_bitmapData);
-
+            string name = ((FileStream)_mediaFile).Name;
+            itemViewModel.Item.ImageName = name.Substring(name.LastIndexOf("/") + 1);
             RBAListPresenter.Current.AddItemAsync(itemViewModel, SaveComplete);
         }
 
-        public static Bitmap scaleDown(Bitmap realImage, float maxImageSize, bool filter)
-        {
-            float ratio = Math.Min(maxImageSize/realImage.Width, maxImageSize/realImage.Height);
-            double width = Math.Round(ratio*realImage.Width);
-            double height = Math.Round(ratio*realImage.Height);
-
-            Bitmap newBitmap = Bitmap.CreateScaledBitmap(realImage, (int) width, (int) height, filter);
-            return newBitmap;
-        }
+       
 
         #endregion
 

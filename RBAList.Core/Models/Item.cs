@@ -14,6 +14,9 @@ namespace RBAList.Core.Models
         public double? RetailPrice { get; set; }
         public bool Sold { get; set; }
         public string ImageGuid { get; set; }
+        public string ImageName { get; set; }
+        
+        public string SAS { get; set; }
         public string UserId { get; set; }
 
         #endregion
@@ -27,6 +30,7 @@ namespace RBAList.Core.Models
             Description = string.Empty;
             UserId = string.Empty;
             ImageGuid = string.Empty;
+            ImageName = string.Empty;
         }
 
         #endregion

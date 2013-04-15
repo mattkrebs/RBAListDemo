@@ -7,6 +7,7 @@ using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
 using RBAList.Core;
+using Android.Graphics;
 
 namespace RBAListDemo.Android
 {
@@ -98,10 +99,16 @@ namespace RBAListDemo.Android
             name.Text = product.Item.Name;
             description.Text = product.Item.Description;
             amount.Text = string.Format("${0:0.00}", product.Item.AskingPrice);
-
-            if (product.ItemImage != null)
-            {
-                image.SetImageDrawable((BitmapDrawable) MediaFileHelper.Convert(product.ItemImage.ImageBase64, typeof (BitmapDrawable), null, CultureInfo.CurrentCulture));
+            
+            if (!String.IsNullOrEmpty(product.Item.ImageName))
+            {                 
+                Task.Factory.StartNew(() => {
+                    return BitmapFactory.DecodeStream(new Java.Net.URL("http://rbalist.blob.core.windows.net/rbalist/" + product.Item.ImageName).OpenStream());
+                }).ContinueWith(t =>
+                {                    
+                    using (Bitmap b = (Bitmap)t.Result)
+                    image.SetImageBitmap(b);
+                },TaskScheduler.FromCurrentSynchronizationContext());                
             }
 
 
